@@ -9,6 +9,7 @@ Heavily updated by **[Casey Labs Inc.] (http://www.caseylabs.com)**
 
 *Casey Labs - Contact us for all your Amazon Web Services Consulting needs!*
 
+===================================
 
 **REQUIREMENTS:**
 This script requires the AWS CLI tools to be installed.
