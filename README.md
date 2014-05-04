@@ -29,7 +29,7 @@ has permission to take and delete snapshots of EBS volumes.
 aws configure
 ```
 
-Copy this script to /opt/aws/ebs-snapshot.sh
+Then copy this Bash script to /opt/aws/ebs-snapshot.sh
 ```
 chmod +x /opt/aws/ebs-snapshot.sh
 ```
