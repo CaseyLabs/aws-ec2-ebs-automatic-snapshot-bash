@@ -36,6 +36,7 @@ chmod +x /opt/aws/ebs-snapshot.sh
 
 You should then setup a cron job in order to schedule a nightly backup. Example crontab job:
 ```
+AWS_CONFIG_FILE="/root/.aws/config"
 55 22 * * *     root    /opt/aws/ebs-snapshot.sh > /var/log/ebs-snapshot.log 2>&1
 ```
 
