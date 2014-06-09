@@ -70,7 +70,7 @@ logfile="/var/log/ebs-snapshot.log"
 echo $today >> $logfile
 
 # Grab all volume IDs attached to this instance, and export the IDs to a text file
-aws ec2 describe-volumes --output=text --filter Name=attachment.instance-id,Values=$instance_id | grep VOLUME | cut -f7 > /tmp/volume_info.txt 2>&1
+aws ec2 describe-volumes  --filters Name=attachment.instance-id,Values=$instance_id --query Volumes[].VolumeId --output text | tr '\t' '\n' > /tmp/volume_info.txt 2>&1
 
 # Take a snapshot of all volumes attached to this instance
 for volume_id in $(cat /tmp/volume_info.txt)
@@ -79,7 +79,7 @@ do
 	echo "Volume ID is $volume_id" >> $logfile
     
 	# Next, we're going to take a snapshot of the current volume, and capture the resulting snapshot ID
-	snapresult=$(aws ec2 create-snapshot --output=text --description $description --volume-id $volume_id | cut -f4)
+	snapresult=$(aws ec2 create-snapshot --output=text --description $description --volume-id $volume_id --query SnapshotId)
 	
     echo "New snapshot is $snapresult" >> $logfile
          
@@ -92,14 +92,14 @@ done
 rm /tmp/snapshot_info.txt --force
 for vol_id in $(cat /tmp/volume_info.txt)
 do
-    aws ec2 describe-snapshots --output=text --filters "Name=volume-id,Values=$vol_id" "Name=tag:CreatedBy,Values=AutomatedBackup"| grep SNAPSHOT | cut -f5 | sort | uniq >> /tmp/snapshot_info.txt 2>&1
+    aws ec2 describe-snapshots --output=text --filters "Name=volume-id,Values=$vol_id" "Name=tag:CreatedBy,Values=AutomatedBackup" --query Snapshots[].SnapshotId | tr '\t' '\n' | sort | uniq >> /tmp/snapshot_info.txt 2>&1
 done
 
 # Purge all instance volume snapshots created by this script that are older than 7 days
 for snapshot_id in $(cat /tmp/snapshot_info.txt)
 do
     echo "Checking $snapshot_id..."
-	snapshot_date=$(aws ec2 describe-snapshots --output=text --snapshot-ids $snapshot_id | grep SNAPSHOT | awk '{print $6}' | awk -F "T" '{printf "%s\n", $1}')
+	snapshot_date=$(aws ec2 describe-snapshots --output=text --snapshot-ids $snapshot_id --query Snapshots[].StartTime | awk -F "T" '{printf "%s\n", $1}')
     snapshot_date_in_seconds=`date "--date=$snapshot_date" +%s`
 
     if (( $snapshot_date_in_seconds <= $date_7days_ago_in_seconds )); then
