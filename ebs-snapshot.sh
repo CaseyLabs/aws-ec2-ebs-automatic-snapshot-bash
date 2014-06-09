@@ -8,10 +8,10 @@ set -o pipefail
 #
 ## Automatic EBS Volume Snapshot Creation & Clean-Up Script
 #
-# Originally written by Star Dot Hosting (www.stardothosting.com)
+# Originally written by Star Dot Hosting (http://www.stardothosting.com)
 # http://www.stardothosting.com/blog/2012/05/automated-amazon-ebs-snapshot-backup-script-with-7-day-retention/
 #
-# Heavily updated by Casey Labs Inc. www.caseylabs.com)
+# Heavily updated by Casey Labs Inc. (http://www.caseylabs.com)
 # Casey Labs - Contact us for all your Amazon Web Services Consulting needs!
 #
 # PURPOSE: This Bash script can be used to take automatic snapshots of your Linux EC2 instance. Script process:
