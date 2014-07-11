@@ -5,40 +5,9 @@ aws-ec2-ebs-automatic-snapshot-bash
 
 *Originally written by [Star Dot Hosting] (http://www.stardothosting.com)*
 
-Heavily updated by **[Casey Labs Inc.] (http://www.caseylabs.com)**
+Heavily updated by  **[AWS Consultants - Casey Labs Inc.] (http://www.caseylabs.com)**
 
 *Casey Labs - Contact us for all your Amazon Web Services Consulting needs!*
-
-===================================
-
-**REQUIREMENTS:**
-This script requires the AWS CLI tools to be installed.
-
-Read me about AWS CLI at: https://aws.amazon.com/cli/
-
-Linux install instructions for AWS CLI:
- - Make sure Python pip is installed (e.g. yum install python-pip)
- - Then run: 
-```
-pip install awscli
-```
-Once the AWS CLI has been installed, you'll need to configure it with the credentials of an IAM user that
-has permission to take and delete snapshots of EBS volumes.
- Configure AWS CLI by running this command: 
-```
-aws configure
-```
-
-Then copy this Bash script to /opt/aws/ebs-snapshot.sh and make it executable:
-```
-chmod +x /opt/aws/ebs-snapshot.sh
-```
-
-You should then setup a cron job in order to schedule a nightly backup. Example crontab job:
-```
-AWS_CONFIG_FILE="/root/.aws/config"
-55 22 * * *     root    /opt/aws/ebs-snapshot.sh > /var/log/ebs-snapshot.log 2>&1
-```
 
 ===================================
 
@@ -51,3 +20,70 @@ ebs-snapshot.sh will:
 
 
 Pull requests greatly welcomed!
+
+===================================
+
+**REQUIREMENTS**
+
+**IAM User:** This script requires that a new user (e.g. ebs-snapshot) be created in the IAM section of AWS. 
+Here is a sample IAM policy for AWS permissions that this new user will require:
+
+```
+{
+  "Statement": [
+    {
+      "Sid": "Stmt1345661449962",
+      "Action": [
+        "ec2:CreateSnapshot",
+        "ec2:DeleteSnapshot",
+        "ec2:CreateTags",
+        "ec2:DescribeInstanceAttribute",
+        "ec2:DescribeInstanceStatus",
+        "ec2:DescribeInstances",
+        "ec2:DescribeSnapshotAttribute",
+        "ec2:DescribeSnapshots",
+        "ec2:DescribeVolumeAttribute",
+        "ec2:DescribeVolumeStatus",
+        "ec2:DescribeVolumes",
+        "ec2:ReportInstanceStatus",
+        "ec2:ResetSnapshotAttribute"
+      ],
+      "Effect": "Allow",
+      "Resource": [
+        "*"
+      ]
+    }
+  ]
+}
+```
+<br />
+
+**AWS CLI:** This script requires the AWS CLI tools to be installed.
+
+Linux install instructions for AWS CLI:
+ - Make sure Python pip is installed (e.g. yum install python-pip, or apt-get install python-pip)
+ - Then run: 
+```
+pip install awscli
+```
+Once the AWS CLI has been installed, you'll need to configure it with the credentials of the IAM user created above:
+
+```
+aws configure
+```
+
+Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user.
+Region Name: the region that this instance is currently in.
+Output Format: enter "text"
+
+
+Then copy this Bash script to /opt/aws/ebs-snapshot.sh and make it executable:
+```
+chmod +x /opt/aws/ebs-snapshot.sh
+```
+
+You should then setup a cron job in order to schedule a nightly backup. Example crontab job:
+```
+AWS_CONFIG_FILE="/root/.aws/config"
+55 22 * * *     root    /opt/aws/ebs-snapshot.sh > /var/log/ebs-snapshot.log 2>&1
+```
