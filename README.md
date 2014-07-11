@@ -32,7 +32,6 @@ Here is a sample IAM policy for AWS permissions that this new user will require:
 {
   "Statement": [
     {
-      "Sid": "Stmt1345661449962",
       "Action": [
         "ec2:CreateSnapshot",
         "ec2:DeleteSnapshot",
