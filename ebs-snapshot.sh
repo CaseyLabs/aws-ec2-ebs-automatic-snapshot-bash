@@ -28,26 +28,63 @@ set -o pipefail
 # theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this
 # software or service, even if advised of the possibility of such damage.
 #
-# NON-LEGAL MUMBO-JUMBO DISCLAIMER: Hey, this script deletes snapshots older than seven days old! (Though only the ones that it creates).
+# NON-LEGAL MUMBO-JUMBO DISCLAIMER: Hey, this script deletes snapshots (though only the ones that it creates)!
 # Make sure that you undestand how the script works. No responsibility accepted in event of accidental data loss.
 # 
 #######################################################################
 
 ## REQUIREMENTS:
-# This script requires the AWS CLI tools to be installed.
-# Read me about AWS CLI at: https://aws.amazon.com/cli/
 
-# Assumptions: these commands are ran as the root user.
+## IAM USER:
+#
+# This script requires that a new user (e.g. ebs-snapshot) be created in the IAM section of AWS. 
+# Here is a sample IAM policy for AWS permissions that this new user will require:
+#
+#{
+#  "Statement": [
+#    {
+#      "Sid": "Stmt1345661449962",
+#      "Action": [
+#        "ec2:CreateSnapshot",
+#        "ec2:DeleteSnapshot",
+#        "ec2:CreateTags",
+#        "ec2:DescribeInstanceAttribute",
+#        "ec2:DescribeInstanceStatus",
+#        "ec2:DescribeInstances",
+#        "ec2:DescribeSnapshotAttribute",
+#        "ec2:DescribeSnapshots",
+#        "ec2:DescribeVolumeAttribute",
+#        "ec2:DescribeVolumeStatus",
+#        "ec2:DescribeVolumes",
+#        "ec2:ReportInstanceStatus",
+#        "ec2:ResetSnapshotAttribute"
+#      ],
+#      "Effect": "Allow",
+#      "Resource": [
+#        "*"
+#      ]
+#    }
+#  ]
+#}
+
+
+## AWS CLI: This script requires the AWS CLI tools to be installed.
+# Read more about AWS CLI at: https://aws.amazon.com/cli/
+
+# ASSUMPTION: these commands are ran as the root user.
 #
 # Linux install instructions for AWS CLI:
-# - Install Python pip (e.g. yum install python-pip)
+# - Install Python pip (e.g. yum install python-pip or apt-get install python-pip)
 # - Then run: pip install awscli
 
-# Once the AWS CLI has been installed, you'll need to configure it with the credentials of an IAM user that
-# has permission to take and delete snapshots of EBS volumes.
 # Configure AWS CLI by running this command: 
 #		aws configure
 
+# Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user
+# Region Name: the region that this instance is currently in.
+# Output Format: enter "text"
+
+## SCRIPT SETUP:
 # Copy this script to /opt/aws/ebs-snapshot.sh
 # And make it exectuable: chmod +x /opt/aws/ebs-snapshot.sh
 
@@ -62,9 +99,12 @@ set -o pipefail
 
 # Set Variables
 instance_id=`wget -q -O- http://169.254.169.254/latest/meta-data/instance-id`
-date_7days_ago_in_seconds=`date +%s --date '7 days ago'`
 today=`date +"%m-%d-%Y"+"%T"`
 logfile="/var/log/ebs-snapshot.log"
+
+# How many days do you wish to retain backups for? Default: 7 days
+retention_days="7"
+retention_date_in_seconds=`date +%s --date "$retention_days days ago"`
 
 # Start log file: today's date
 echo $today >> $logfile
@@ -102,7 +142,7 @@ do
 	snapshot_date=$(aws ec2 describe-snapshots --output=text --snapshot-ids $snapshot_id --query Snapshots[].StartTime | awk -F "T" '{printf "%s\n", $1}')
     snapshot_date_in_seconds=`date "--date=$snapshot_date" +%s`
 
-    if (( $snapshot_date_in_seconds <= $date_7days_ago_in_seconds )); then
+    if (( $snapshot_date_in_seconds <= $retention_date_in_seconds )); then
         echo "Deleting snapshot $snapshot_id ..." >> $logfile
         aws ec2 delete-snapshot --snapshot-id $snapshot_id
     else
