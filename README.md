@@ -25,7 +25,7 @@ Pull requests greatly welcomed!
 
 **REQUIREMENTS**
 
-**IAM User:** This script requires that a new user (e.g. ebs-snapshot) be created in the IAM section of AWS. 
+**IAM User:** This script requires that a new user (e.g. ebs-snapshot) be created in the IAM section of AWS.   
 Here is a sample IAM policy for AWS permissions that this new user will require:
 
 ```
@@ -71,9 +71,9 @@ Once the AWS CLI has been installed, you'll need to configure it with the creden
 aws configure
 ```
 
-Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user.
-Region Name: the region that this instance is currently in.
-Output Format: enter "text"
+Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user.  
+Region Name: the region that this instance is currently in.  
+Output Format: enter "text"  
 
 
 Then copy this Bash script to /opt/aws/ebs-snapshot.sh and make it executable:
