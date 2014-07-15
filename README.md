@@ -71,9 +71,9 @@ Once the AWS CLI has been installed, you'll need to configure it with the creden
 aws configure
 ```
 
-Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user.  
-Region Name: the region that this instance is currently in.  
-Output Format: enter "text"  
+_Access Key & Secret Access Key_: enter in the credentials generated above for the new IAM user.  
+_Region Name_: the region that this instance is currently in.  
+_Output Format_: enter "text"  
 
 
 Then copy this Bash script to /opt/aws/ebs-snapshot.sh and make it executable:
