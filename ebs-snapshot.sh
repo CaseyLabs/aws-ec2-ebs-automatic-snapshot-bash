@@ -94,6 +94,7 @@ set -o pipefail
 # AWS_CONFIG_FILE="/root/.aws/config"
 # 00 06 * * *     root    /opt/aws/ebs-snapshot.sh >> /var/log/ebs-snapshot.log 2>&1
 
+export PATH=$PATH:/usr/local/bin/:/usr/bin
 
 ## START SCRIPT
 
