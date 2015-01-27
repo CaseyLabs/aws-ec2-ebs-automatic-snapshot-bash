@@ -68,11 +68,11 @@ pip install awscli
 Once the AWS CLI has been installed, you'll need to configure it with the credentials of the IAM user created above:
 
 ```
-aws configure
+sudo aws configure
 ```
 
 _Access Key & Secret Access Key_: enter in the credentials generated above for the new IAM user.  
-_Region Name_: the region that this instance is currently in.  
+_Region Name_: the region that this instance is currently in.  i.e. us-east-1, eu-west-1, etc.
 _Output Format_: enter "text"  
 
 
