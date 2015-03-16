@@ -41,30 +41,31 @@ set -o pipefail
 # Here is a sample IAM policy for AWS permissions that this new user will require:
 #
 #{
-#  "Statement": [
-#    {
-#      "Sid": "Stmt1345661449962",
-#      "Action": [
-#        "ec2:CreateSnapshot",
-#        "ec2:DeleteSnapshot",
-#        "ec2:CreateTags",
-#        "ec2:DescribeInstanceAttribute",
-#        "ec2:DescribeInstanceStatus",
-#        "ec2:DescribeInstances",
-#        "ec2:DescribeSnapshotAttribute",
-#        "ec2:DescribeSnapshots",
-#        "ec2:DescribeVolumeAttribute",
-#        "ec2:DescribeVolumeStatus",
-#        "ec2:DescribeVolumes",
-#        "ec2:ReportInstanceStatus",
-#        "ec2:ResetSnapshotAttribute"
-#      ],
-#      "Effect": "Allow",
-#      "Resource": [
-#        "*"
-#      ]
-#    }
-#  ]
+#    "Version": "2012-10-17",
+#    "Statement": [
+#        {
+#            "Sid": "Stmt1426256275000",
+#            "Effect": "Allow",
+#            "Action": [
+#                "ec2:CreateSnapshot",
+#                "ec2:CreateTags",
+#                "ec2:DeleteSnapshot",
+#                "ec2:DescribeInstanceAttribute",
+#                "ec2:DescribeInstanceStatus",
+#                "ec2:DescribeInstances",
+#                "ec2:DescribeSnapshotAttribute",
+#                "ec2:DescribeSnapshots",
+#                "ec2:DescribeVolumeAttribute",
+#                "ec2:DescribeVolumeStatus",
+#                "ec2:DescribeVolumes",
+#                "ec2:ReportInstanceStatus",
+#                "ec2:ResetSnapshotAttribute"
+#            ],
+#            "Resource": [
+#                "*"
+#            ]
+#        }
+#    ]
 #}
 
 
