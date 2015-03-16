@@ -40,7 +40,7 @@ set -o pipefail
 # This script requires that a new user (e.g. ebs-snapshot) be created in the IAM section of AWS. 
 # Here is a sample IAM policy for AWS permissions that this new user will require:
 #
-#{
+# {
 #    "Version": "2012-10-17",
 #    "Statement": [
 #        {
@@ -66,7 +66,7 @@ set -o pipefail
 #            ]
 #        }
 #    ]
-#}
+# }
 
 
 ## AWS CLI: This script requires the AWS CLI tools to be installed.
