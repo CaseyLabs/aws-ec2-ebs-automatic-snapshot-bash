@@ -3,11 +3,8 @@ aws-ec2-ebs-automatic-snapshot-bash
 
 ####Bash script for Automatic EBS Snapshots and Cleanup on Amazon Web Services (AWS)
 
-*Originally written by [Star Dot Hosting] (http://www.stardothosting.com)*
-
-Heavily updated by  **[AWS Consultants - Casey Labs Inc.] (http://www.caseylabs.com)**
-
-*Casey Labs - Contact us for all your Amazon Web Services Consulting needs!*
+Written by  **[AWS Consultants - Casey Labs Inc.] (http://www.caseylabs.com)**
+*Contact us for all your Amazon Web Services Consulting needs!*
 
 ===================================
 
@@ -17,7 +14,6 @@ ebs-snapshot.sh will:
 - Gather a list of all volume IDs attached to that instance
 - Take a snapshot of each attached volume
 - The script will then delete all associated snapshots taken by the script that are older than 7 days
-
 
 Pull requests greatly welcomed!
 
@@ -39,16 +35,11 @@ Here is a sample IAM policy for AWS permissions that this new user will require:
                 "ec2:CreateSnapshot",
                 "ec2:CreateTags",
                 "ec2:DeleteSnapshot",
-                "ec2:DescribeInstanceAttribute",
-                "ec2:DescribeInstanceStatus",
-                "ec2:DescribeInstances",
                 "ec2:DescribeSnapshotAttribute",
                 "ec2:DescribeSnapshots",
                 "ec2:DescribeVolumeAttribute",
                 "ec2:DescribeVolumeStatus",
-                "ec2:DescribeVolumes",
-                "ec2:ReportInstanceStatus",
-                "ec2:ResetSnapshotAttribute"
+                "ec2:DescribeVolumes"
             ],
             "Resource": [
                 "*"
@@ -68,6 +59,7 @@ Linux install instructions for AWS CLI:
 pip install awscli
 ```
 Once the AWS CLI has been installed, you'll need to configure it with the credentials of the IAM user created above:
+(Note: this step can be skipped if you have an IAM Role setup for your instance to use the IAM policy listed above.)
 
 ```
 sudo aws configure
