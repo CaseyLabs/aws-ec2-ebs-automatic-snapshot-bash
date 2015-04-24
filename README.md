@@ -81,3 +81,8 @@ You should then setup a cron job in order to schedule a nightly backup. Example 
 ```
 55 22 * * * root  AWS_CONFIG_FILE="/root/.aws/config" /opt/aws/ebs-snapshot.sh > /var/log/ebs-snapshot.log 2>&1
 ```
+
+To manually test the script:
+```
+sudo /opt/aws/ebs-snapshot.sh
+```
