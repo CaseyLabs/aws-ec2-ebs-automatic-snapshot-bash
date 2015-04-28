@@ -85,7 +85,7 @@ set -o pipefail
 	# (You will have to specify the location of the AWS CLI Config file)
 	#
 	# AWS_CONFIG_FILE="/root/.aws/config"
-	# 00 06 * * *     root    /opt/aws/ebs-snapshot.sh >> /var/log/ebs-snapshot.log 2>&1
+	# 00 06 * * *     root    /opt/aws/ebs-snapshot.sh
 
 
 
@@ -109,9 +109,9 @@ retention_date_in_seconds=$(date +%s --date "$retention_days days ago")
 # Function: Setup logfile and redirect stdout/stderr.
 log_setup() {
     # Check if logfile exists and is writable.
-	( [ -e "$logfile" ] || touch "$logfile" ) && [ ! -w "$logfile" ] && echo "ERROR: Cannot write to $logfile. Check permissions or sudo access." && exit 1
-	
-	tmplog=$(tail -n $logfile_max_lines $logfile 2>/dev/null) && echo "${tmplog}" > $logfile
+    ( [ -e "$logfile" ] || touch "$logfile" ) && [ ! -w "$logfile" ] && echo "ERROR: Cannot write to $logfile. Check permissions or sudo access." && exit 1
+
+    tmplog=$(tail -n $logfile_max_lines $logfile 2>/dev/null) && echo "${tmplog}" > $logfile
     exec > >(tee -a $logfile)
     exec 2>&1
 }
