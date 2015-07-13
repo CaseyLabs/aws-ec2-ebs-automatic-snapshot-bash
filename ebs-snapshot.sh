@@ -136,8 +136,11 @@ snapshot_volumes() {
 	for volume_id in $volume_list; do
 		log "Volume ID is $volume_id"
 
+		# Get the attched device name to add to the description so we can easily tell which volume this is.
+		device_name=$(aws ec2 describe-volumes --volume-ids $volume_id --query 'Volumes[0].{Devices:Attachments[0].Device}')
+
 		# Take a snapshot of the current volume, and capture the resulting snapshot ID
-		snapshot_description="$(hostname)-backup-$(date +%Y-%m-%d)"
+		snapshot_description="$(hostname)-$device_name-backup-$(date +%Y-%m-%d)"
 
 		snapshot_id=$(aws ec2 create-snapshot --region $region --output=text --description $snapshot_description --volume-id $volume_id --query SnapshotId)
 		log "New snapshot is $snapshot_id"
