@@ -35,10 +35,7 @@ Here is a sample IAM policy for AWS permissions that this new user will require:
                 "ec2:CreateSnapshot",
                 "ec2:CreateTags",
                 "ec2:DeleteSnapshot",
-                "ec2:DescribeSnapshotAttribute",
                 "ec2:DescribeSnapshots",
-                "ec2:DescribeVolumeAttribute",
-                "ec2:DescribeVolumeStatus",
                 "ec2:DescribeVolumes"
             ],
             "Resource": [
