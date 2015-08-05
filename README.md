@@ -4,7 +4,8 @@ aws-ec2-ebs-automatic-snapshot-bash
 ####Bash script for Automatic EBS Snapshots and Cleanup on Amazon Web Services (AWS)
 
 Written by  **[AWS Consultants - Casey Labs Inc.] (http://www.caseylabs.com)**
-*Contact us for all your Amazon Web Services Consulting needs!*
+
+*Contact us for all your Amazon Web Services consulting needs!*
 
 ===================================
 
@@ -48,8 +49,7 @@ Pull requests greatly welcomed!
 
 **AWS CLI:** This script requires the AWS CLI tools to be installed.
 
-Linux install instructions for AWS CLI:
- - Make sure Python pip is installed:
+First, make sure Python pip is installed:
 ```
 # Ubuntu
 sudo apt-get install python-pip -y
@@ -57,7 +57,7 @@ sudo apt-get install python-pip -y
 # Red Hat/CentOS
 sudo yum install python-pip -y
 ```
- - Then install the AWS CLI tools: 
+Then install the AWS CLI tools: 
 ```
 sudo pip install awscli
 ```
@@ -73,9 +73,8 @@ Default region name: (The region that this instance is in: i.e. us-east-1, eu-we
 Default output format: (Enter "text".)```
 ```
 
-**Install Script**
 
-- Download the latest version of the snapshot script and make it executable:
+**Install Script**: Download the latest version of the snapshot script and make it executable:
 ```
 cd ~
 wget https://raw.githubusercontent.com/CaseyLabs/aws-ec2-ebs-automatic-snapshot-bash/master/ebs-snapshot.sh
@@ -88,7 +87,7 @@ You should then setup a cron job in order to schedule a nightly backup. Example 
 ```
 55 22 * * * root  AWS_CONFIG_FILE="/root/.aws/config" /opt/aws/ebs-snapshot.sh
 
-#Or written another way:
+# Or written another way:
 AWS_CONFIG_FILE="/root/.aws/config" 
 55 22 * * * root  /opt/aws/ebs-snapshot.sh
 ```
