@@ -62,7 +62,6 @@ Then install the AWS CLI tools:
 sudo pip install awscli
 ```
 Once the AWS CLI has been installed, you'll need to configure it with the credentials of the IAM user created above:
-(Note: this step can be skipped if you have an IAM Role setup for your instance to use the IAM policy listed above.)
 
 ```
 sudo aws configure
