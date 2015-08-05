@@ -72,7 +72,7 @@ AWS Secret Access Key: (Enter in the IAM credentials generated above.)
 Default region name: (The region that this instance is in: i.e. us-east-1, eu-west-1, etc.)
 Default output format: (Enter "text".)```
 ```
-
+<br />
 
 **Install Script**: Download the latest version of the snapshot script and make it executable:
 ```
