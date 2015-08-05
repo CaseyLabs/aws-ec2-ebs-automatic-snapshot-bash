@@ -6,11 +6,11 @@ export PATH=$PATH:/usr/local/bin/:/usr/bin
 set -ue
 set -o pipefail
 
-
 ## Automatic EBS Volume Snapshot Creation & Clean-Up Script
 #
 # Written by Casey Labs Inc. (https://www.caseylabs.com)
-# Casey Labs - Contact us for all your Amazon Web Services Consulting needs!
+# Contact us for all your Amazon Web Services Consulting needs!
+# Script Github repo: https://github.com/CaseyLabs/aws-ec2-ebs-automatic-snapshot-bash
 #
 # Additonal credits: Log function by Alan Franzoni; Pre-req check by Colin Johnson
 #
@@ -20,73 +20,9 @@ set -o pipefail
 # - Take a snapshot of each attached volume
 # - The script will then delete all associated snapshots taken by the script that are older than 7 days
 #
-# DISCLAIMER: Hey, this script deletes snapshots (though only the ones that it creates)!
-# Make sure that you undestand how the script works. No responsibility accepted in event of accidental data loss.
+# DISCLAIMER: This script deletes snapshots (though only the ones that it creates). 
+# Make sure that you understand how the script works. No responsibility accepted in event of accidental data loss.
 #
-
-
-## Requirements ##
-
-	## 1) IAM USER:
-	#
-	# This script requires that a new IAM user be created in the IAM section of AWS. 
-	# Here is a sample IAM policy for AWS permissions that this new user will require:
-	#
-	# {
-	#    "Version": "2012-10-17",
-	#    "Statement": [
-	#        {
-	#            "Sid": "Stmt1426256275000",
-	#            "Effect": "Allow",
-	#            "Action": [
-	#                "ec2:CreateSnapshot",
-	#                "ec2:CreateTags",
-	#                "ec2:DeleteSnapshot",
-	#                "ec2:DescribeSnapshotAttribute",
-	#                "ec2:DescribeSnapshots",
-	#                "ec2:DescribeVolumeAttribute",
-	#                "ec2:DescribeVolumes"
-	#            ],
-	#            "Resource": [
-	#                "*"
-	#            ]
-	#        }
-	#    ]
-	# }
-
-
-	## 2) AWS CLI: 
-	#
-	# This script requires the AWS CLI tools to be installed.
-	# Read more about AWS CLI at: https://aws.amazon.com/cli/
-	#
-	# Linux install instructions for AWS CLI:
-	# ASSUMPTION: these commands are ran as the ROOT user.
-	#
-	# - Install Python pip (e.g. yum install python-pip or apt-get install python-pip)
-	# - Then run: pip install awscli
-	#
-	# Configure AWS CLI by running this command: 
-	#		aws configure
-	#
-	# [NOTE: if you have an IAM Role Setup for your instance to use the IAM policy listed above, you can skip the aws configure step.]
-	#
-	# Access Key & Secret Access Key: enter in the credentials generated above for the new IAM user
-	# Region Name: the region that this instance is currently in (e.g. us-east-1, us-west-1, etc)
-	# Output Format: enter "text"
-
-
-	## 3) SCRIPT INSTALLATION:
-	#
-	# Copy this script to /opt/aws/ebs-snapshot.sh
-	# And make it exectuable: chmod +x /opt/aws/ebs-snapshot.sh
-	#
-	# Then setup a crontab job for nightly backups:
-	# (You will have to specify the location of the AWS CLI Config file)
-	#
-	# AWS_CONFIG_FILE="/root/.aws/config"
-	# 00 06 * * *     root    /opt/aws/ebs-snapshot.sh
-
 
 
 ## Variable Declartions ##
